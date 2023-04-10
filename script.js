@@ -8,7 +8,7 @@ class Calculator {
       this.clear() // Set everything to default blank values
     }
     
-    // Function for clearning numbers
+    // Function for clearning numbers and symbols
     clear() {
       this.currentOperand = ''
       this.previousOperand = ''
@@ -29,6 +29,7 @@ class Calculator {
     // Choosing an operation (plus, muinus, multiply, divide)
     chooseOperation(operation) {
       if (this.currentOperand === '') return
+      // If a user wants to do a computation and then another computation
       if (this.previousOperand !== '') {
         this.compute()
       }
@@ -69,7 +70,9 @@ class Calculator {
   
     getDisplayNumber(number) {
       const stringNumber = number.toString()
+      // Convert string to float number, get integer values before .
       const integerDigits = parseFloat(stringNumber.split('.')[0])
+      // Convert string to float number, get integer values after .
       const decimalDigits = stringNumber.split('.')[1]
       let integerDisplay
       if (isNaN(integerDigits)) {
@@ -92,6 +95,7 @@ class Calculator {
         this.previousOperandTextElement.innerText =
           `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
       } else {
+        // Clears out previous operation when computation is complete
         this.previousOperandTextElement.innerText = ''
       }
     }
@@ -115,13 +119,15 @@ class Calculator {
     })
   })
   
+  // On clicking operation button, add operation symbol and update display
   operationButtons.forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', () => { 
       calculator.chooseOperation(button.innerText)
       calculator.updateDisplay()
     })
   })
   
+  // If user clicks equals button, make computation and update display
   equalsButton.addEventListener('click', button => {
     calculator.compute()
     calculator.updateDisplay()
