@@ -1,25 +1,32 @@
+// Step 4 - Create JavaScript for calculator
+// Class is a template for JS objects. Objects in contructor are properties of the class.
+// Always use constructor() at beginning of a class. Used to initalize object properties.
 class Calculator {
     constructor(previousOperandTextElement, currentOperandTextElement) {
       this.previousOperandTextElement = previousOperandTextElement
       this.currentOperandTextElement = currentOperandTextElement
-      this.clear()
+      this.clear() // Set everything to default blank values
     }
-  
+    
+    // Function for clearning numbers
     clear() {
       this.currentOperand = ''
       this.previousOperand = ''
       this.operation = undefined
     }
-  
+
+    // Function for deleteing numbers
     delete() {
       this.currentOperand = this.currentOperand.toString().slice(0, -1)
     }
-  
+
+    // Function for appending numbers to screen
     appendNumber(number) {
       if (number === '.' && this.currentOperand.includes('.')) return
       this.currentOperand = this.currentOperand.toString() + number.toString()
     }
-  
+
+    // Choosing an operation (plus, muinus, multiply, divide)
     chooseOperation(operation) {
       if (this.currentOperand === '') return
       if (this.previousOperand !== '') {
@@ -29,12 +36,16 @@ class Calculator {
       this.previousOperand = this.currentOperand
       this.currentOperand = ''
     }
-  
+    
+    // Compute values
     compute() {
       let computation
+      // Parse a value as a string and return the first number.
       const prev = parseFloat(this.previousOperand)
       const current = parseFloat(this.currentOperand)
+      // If a non-number is used, return nothing
       if (isNaN(prev) || isNaN(current)) return
+      // Select operation to be calculated
       switch (this.operation) {
         case '+':
           computation = prev + current
@@ -73,6 +84,7 @@ class Calculator {
       }
     }
   
+    // Update display
     updateDisplay() {
       this.currentOperandTextElement.innerText =
         this.getDisplayNumber(this.currentOperand)
@@ -96,9 +108,9 @@ class Calculator {
   
   const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
   
-  numberButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      calculator.appendNumber(button.innerText)
+  numberButtons.forEach(button => { // For each button used, perform function
+    button.addEventListener('click', () => { // On each click, perform function
+      calculator.appendNumber(button.innerText) // Appends inner text of HTML button
       calculator.updateDisplay()
     })
   })

@@ -1,3 +1,4 @@
+/* Step 3 - Style calculator */
 *, *::before, *::after {
     box-sizing: border-box;
     font-family: Gotham Rounded, sans-serif;
@@ -7,41 +8,52 @@
   body {
     padding: 0;
     margin: 0;
-    background: linear-gradient(to right, #00AAFF, #00FF6C);
+    /* Originally was background: linear-gradient(to right #00aaff, #00ff6c
+    This was not working in Chrome, so I found a solution here: 
+    https://stackoverflow.com/questions/26318988/linear-gradient-not-working-in-chrome */
+    background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      color-stop(0%, #00aaff),
+      color-stop(100%, #00ff6c)
+    );
   }
   
   .calculator-grid {
     display: grid;
     justify-content: center;
-    align-content: center;
-    min-height: 100vh;
-    grid-template-columns: repeat(4, 100px);
+    align-content: center; /* Instead of align-items: center */
+    min-height: 100vh; /* Fills full height of screen */
+    grid-template-columns: repeat(4, 100px); /* 4 columns, 100px width */
+    /* First row minimum 120px, max automatic; then 5 rows 100px height */
     grid-template-rows: minmax(120px, auto) repeat(5, 100px);
   }
   
+  /* Matches to buttons that are direct child of calculator-grid class */
   .calculator-grid > button {
     cursor: pointer;
     font-size: 2rem;
     border: 1px solid white;
     outline: none;
-    background-color: rgba(255, 255, 255, .75);
+    background-color: rgba(255, 255, 255, .75); /* 75% opaque */
   }
   
   .calculator-grid > button:hover {
-    background-color: rgba(255, 255, 255, .9);
+    background-color: rgba(255, 255, 255, .9); /* 90% opaque on hover */
   }
   
   .span-two {
-    grid-column: span 2;
+    grid-column: span 2; /* Take up two columns worth for buttons with this class */
   }
   
   .output {
-    grid-column: 1 / -1;
+    grid-column: 1 / -1; /* Starts at grid line 1, goes to grid line -1, covering width of grid */
     background-color: rgba(0, 0, 0, .75);
     display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    flex-direction: column;
+    align-items: flex-end; /* Align items along cross-axis end line */
+    justify-content: space-around; /* Displays the flex items with space before, between, and after the lines, used instead of space-between */
+    flex-direction: column; /* Displays as column instead of verticlaly */
     padding: 10px;
     word-wrap: break-word;
     word-break: break-all;
@@ -56,7 +68,3 @@
     color: white;
     font-size: 2.5rem;
   }
-  Footer
-  © 2023 GitHub, Inc.
-  Footer navigation
-  Term
